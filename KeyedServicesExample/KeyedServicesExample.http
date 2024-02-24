@@ -1,0 +1,6 @@
+@KeyedServicesExample_HostAddress = http://localhost:1234
+
+GET {{KeyedServicesExample_HostAddress}}/home/index
+Accept: application/json
+
+###
