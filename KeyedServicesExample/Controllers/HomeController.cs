@@ -7,30 +7,20 @@ namespace KeyedServicesExample.Controllers
     [Route("[controller]/[action]")]
     public class HomeController : ControllerBase
     {
-        private readonly INotifier _notifier;
-        private readonly IEnumerable<INotifier> _notifiers;
-
-        public HomeController(INotifier notifier, IEnumerable<INotifier> notifiers)
+        private readonly INotifier _emailNotifier;
+        private readonly INotifier _sMSNotifier;
+       
+        public HomeController([FromKeyedServices("SMS")]INotifier SMSNotifier, [FromKeyedServices("Email")] INotifier EmailNotifier)
         {
-            _notifier = notifier;
-            _notifiers = notifiers;
+            _sMSNotifier = SMSNotifier;
+            _emailNotifier = EmailNotifier;
         }
 
         [HttpGet]
         public ActionResult Index() {
-            foreach (var item in _notifiers)
-            {
-                if(item is SMSNotifier)
-                {
-                    item.Send("Message");
-                }
-                else
-                {
-                    item.Send("Message");
-                }
-
-            }
-            
+           
+            _sMSNotifier.Send("Message");
+            _emailNotifier.Send("Message");
             return Ok("Ok From Index");
         }
     }

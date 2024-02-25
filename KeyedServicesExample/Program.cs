@@ -5,8 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddScoped<INotifier, SMSNotifier>();
-    builder.Services.AddScoped<INotifier,EmailNotifier>();
+    builder.Services.AddKeyedScoped<INotifier, SMSNotifier>("SMS");
+    builder.Services.AddKeyedScoped<INotifier,EmailNotifier>("Email");
 
 }
 var app = builder.Build();
